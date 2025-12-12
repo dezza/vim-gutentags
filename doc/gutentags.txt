@@ -225,20 +225,20 @@ would only go away when Vim decides to refresh the statusline. You can force
 refresh it in a callback on |GutentagsUpdating| and |GutentagsUpdated|.
 
 For instance, with the `lightline` plugin:
-
+>
         augroup MyGutentagsStatusLineRefresher
             autocmd!
             autocmd User GutentagsUpdating call lightline#update()
             autocmd User GutentagsUpdated call lightline#update()
         augroup END
-
+<
                                                 *gutentags#statusline_cb*
 As an alternative to the previous function, `gutentags#statusline_cb` takes
 a single parameter which should be a |Funcref| or a function name. This
 function should take a list of active module names, and return a string. This
 lets you completely control what the status line will print.
 
-For instance:
+For instance: >
         function! s:get_gutentags_status(mods) abort
             let l:msg = ''
             if index(a:mods, 'ctags') >= 0
@@ -252,7 +252,7 @@ For instance:
 
         :set statusline+=%{gutentags#statusline_cb(
                     \function('<SID>get_gutentags_status'))}
-
+<
 By default, the callback function doesn't get called if no tags generation is
 currently happening. You can pass `1` as a second argument so that the
 callback function is always called.
@@ -272,6 +272,7 @@ g:gutentags_enabled
                         re-enable Gutentags, you won't have some buffers
                         mysteriously working while others (those open last)
                         don't.
+
                         Defaults to `1`.
 
                                                 *gutentags_trace*
@@ -355,7 +356,8 @@ g:gutentags_add_ctrlp_root_markers
                         CtrlP plugin), it will append those root markers to
                         the existing ones (see |g:gutentags_project_root|).
                         Set this to 0 to stop it from happening.
-                        Defaults to 1.
+
+                        Defaults to `1`.
 
                                                 *gutentags_exclude_filetypes*
 g:gutentags_exclude_filetypes
@@ -406,7 +408,8 @@ g:gutentags_generate_on_missing
                         time the file is saved (if
                         |gutentags_generate_on_write| is set to 1), or when
                         |GutentagsUpdate| or |GutentagsGenerate| is run.
-                        Defaults to 1.
+
+                        Defaults to `1`.
 
                                                 *gutentags_generate_on_new*
 g:gutentags_generate_on_new
@@ -420,7 +423,8 @@ g:gutentags_generate_on_new
                         When set to 0, Gutentags won't do anything special.
                         See also |gutentags_generate_on_missing| and
                         |gutentags_generate_on_write|.
-                        Defaults to 1.
+
+                        Defaults to `1`.
 
                                                 *gutentags_generate_on_write*
 g:gutentags_generate_on_write
@@ -432,7 +436,8 @@ g:gutentags_generate_on_write
                         This means that the project's tag file won't reflect
                         the latest changes, and you will have to run
                         |GutentagsUpdate| manually.
-                        Defaults to 1.
+
+                        Defaults to `1`.
 
                                             *gutentags_generate_on_empty_buffer*
 g:gutentags_generate_on_empty_buffer
@@ -442,7 +447,8 @@ g:gutentags_generate_on_empty_buffer
                         |:cd|) is inside a known project.
                         This is useful if you want Gutentags to generate the
                         tag file right after opening Vim.
-                        Defaults to 0.
+
+                        Defaults to `0`.
 
                                                 *gutentags_background_update*
 g:gutentags_background_update
@@ -450,7 +456,8 @@ g:gutentags_background_update
                         file should be run in the background or in the
                         foreground. If run in the foreground, Vim will block
                         until the process is complete.
-                        Defaults to 1.
+
+                        Defaults to `1`.
 
                                                 *gutentags_cache_dir*
 g:gutentags_cache_dir
@@ -468,7 +475,8 @@ g:gutentags_resolve_symlinks
                         points to a file inside the project. However, this is
                         maybe not what you want if the symlink itself is
                         part of the project.
-                        Defaults to 0.
+
+                        Defaults to `0`.
                         
                                             *gutentags_init_user_func*
 g:gutentags_init_user_func
@@ -487,7 +495,7 @@ g:gutentags_init_user_func
                         `gutentags_enabled_user_func`. The old setting is
                         still used as a fallback.
 
-                        Defaults to "".
+                        Defaults to `""`.
 
                                             *gutentags_define_advanced_commands*
 g:gutentags_define_advanced_commands
@@ -505,9 +513,9 @@ g:gutentags_project_info
 
                         Each dictionary item must contain at least a `type`
                         key, indicating the type of project:
-
+>
                         {"type": "python"}
-
+<
                         Other items will be used to figure out if a project is
                         of the given type.
 
@@ -521,10 +529,10 @@ g:gutentags_project_info
                         information.
 
                         Gutentags adds by default the following definitions:
-
+>
                         call add(g:gutentags_project_info, {'type': 'python', 'file': 'setup.py'})
                         call add(g:gutentags_project_info, {'type': 'ruby', 'file': 'Gemfile'})
-
+<
                         This means, for example, that you can use
                         `g:gutentags_ctags_executable_ruby` out of the box.
                         See |gutentags_ctags_executable_{filetype}| for more
@@ -589,6 +597,7 @@ g:gutentags_ctags_tagfile
                         will be appended to the project's root. See
                         |gutentags_project_root| for how Gutentags locates the
                         project.
+
                         Defaults to `tags`.
 
                                                 *gutentags_ctags_exclude*
@@ -606,7 +615,8 @@ g:gutentags_ctags_exclude_wildignore
                         |gutentags_ctags_executable| so that they are ignored.
                         Set also |gutentags_ctags_exclude| to pass custom
                         patterns.
-                        Defaults to 1.
+
+                        Defaults to `1`.
 
                                                 *gutentags_ctags_auto_set_tags*
 g:gutentags_ctags_auto_set_tags
@@ -618,11 +628,13 @@ g:gutentags_ctags_auto_set_tags
                         this means that whatever tag file it generates may
                         not be picked up by Vim. See |tagfiles()| to know what
                         tag files Vim knows about.
-                        Defaults to 1.
+
+                        Defaults to `1`.
 
                                                 *gutentags_ctags_extra_args*
 g:gutentags_ctags_extra_args
                         A list of arguments to pass to `ctags`.
+
                         Defaults to `[]`.
 
                                                 *gutentags_ctags_post_process_cmd*
@@ -634,6 +646,7 @@ g:gutentags_ctags_post_process_cmd
                         This is useful for cleaning up a tags file that may
                         contain tags with non-ASCII names that somehow upsets
                         Vim.
+
                         Defaults to `""` (an empty |String|).
 
 
@@ -643,6 +656,7 @@ The following settings are valid for the `cscope` module.
 g:gutentags_cscope_executable
                         Specifies the name or path of the `cscope` executable
                         to use to generate the code database.
+
                         Defaults to `"cscope"`.
 
                                                 *gutentags_scopefile*
@@ -651,6 +665,7 @@ g:gutentags_scopefile
                         will be appended to the project's root. See
                         |gutentags_project_root| for how Gutentags locates the
                         project.
+
                         Defaults to `"cscope.out"`.
 
                                                 *gutentags_auto_add_cscope*
@@ -658,13 +673,15 @@ g:gutentags_auto_add_cscope
                         If set to 1, Gutentags will automatically add the
                         generated code database to Vim by running `:cs add`
                         (see |:cscope|).
-                        Defaults to 1.
+
+                        Defaults to `1`.
 
                                                 *gutentags_cscope_build_inverted_index*
 g:gutentags_cscope_build_inverted_index
                         If set to 1, Gutentags will make `cscope` build an
                         inverted index.
-                        Defaults to 0.
+
+                        Defaults to `0`.
 
 
 The following settings are valid for the `pycscope` module.
@@ -673,6 +690,7 @@ The following settings are valid for the `pycscope` module.
 g:gutentags_pycscope_executable
                         Specifies the name or path of the `pycscope` executable
                         to use to generate the code database.
+
                         Defaults to `"pycscope"`.
 
                                                 *gutentags_auto_add_pycscope*
@@ -680,7 +698,8 @@ g:gutentags_auto_add_pycscope
                         If set to 1, Gutentags will automatically add the
                         generated code database to Vim by running `:cs add`
                         (see |:pycscope|).
-                        Defaults to 1.
+
+                        Defaults to `1`.
 
 
 The following settings are valid for the `gtags_cscope` module.
@@ -689,12 +708,14 @@ The following settings are valid for the `gtags_cscope` module.
 g:gutentags_gtags_executable
                         Specifies the name or path of the `gtags` executable
                         to use to generate the code database.
+
                         Defaults to `"gtags"`.
 
                                                 *gutentags_gtags_cscope_executable*
 g:gutentags_gtags_cscope_executable
                         Specifies the name or path of the `gtags-cscope`
                         executable to use to generate the code database.
+
                         Defaults to `"gtags-cscope"`.
 
                                                 *gutentags_gtags_dbpath*
@@ -702,6 +723,7 @@ g:gutentags_gtags_dbpath
                         Path from the cache directory (|gutentags_cache_dir|
                         or project root) to the folder containing the
                         definition database file (usually called `GTAGS`).
+
                         Defaults to `""`.
 
                                                 *gutentags_gtags_options_file*
@@ -709,6 +731,7 @@ g:gutentags_gtags_options_file
                         The name of a file that will be looked for in
                         a project root directory. The file is expected to
                         contain `gtags` options (one per line).
+
                         Defaults to `".gutgtags"`.
 
                                                 *gutentags_auto_add_gtags_cscope*
@@ -716,7 +739,8 @@ g:gutentags_auto_add_gtags_cscope
                         If set to 1, Gutentags will automatically add the
                         generated code database to Vim by running `:cs add`
                         (see |:cscope|).
-                        Defaults to 1.
+
+                        Defaults to `1`.
 
 
 People using `cscope`, `pycscope` or `gtags_cscope` across multiple projects in the same
